@@ -1,7 +1,9 @@
 import { COLOR, TextStyleProps, useTextStyle } from 'native-x-theme'
-import React, { useMemo } from 'react'
+import React, { ReactElement, ReactText, useMemo } from 'react'
 import { StyleProp, Text as RNText, TextProps as RNTextProps, TextStyle } from 'react-native'
 import { styles as s } from 'tachyons-react-native'
+
+type TextType = ReactText | ReactElement<Text> | boolean | null | undefined
 
 export interface TextProps extends Pick<RNTextProps, 'onLayout'>, TextStyleProps {
   fill?: boolean
@@ -12,7 +14,7 @@ export interface TextProps extends Pick<RNTextProps, 'onLayout'>, TextStyleProps
   alignLeft?: boolean
   alignCenter?: boolean
   alignRight?: boolean
-  children?: string
+  children?: TextType | Array<TextType>
   upperCase?: boolean
   style?: StyleProp<TextStyle>
   numberOfLines?: number
