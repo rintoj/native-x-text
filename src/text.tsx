@@ -46,13 +46,13 @@ export function Text(props: TextProps) {
     () => [
       alignCenter ? s.tc : alignRight ? s.tr : s.tl,
       fill && s.w100,
-      style,
       upperCase && { textTransform: 'uppercase' },
       bold && s.b,
       semiBold && s.fw5,
       thin && s.fw2,
       italic && s.i,
       textStyle,
+      style,
     ],
     [alignCenter, alignRight, fill, style, upperCase, bold, semiBold, thin, italic, textStyle],
   )
