@@ -21,6 +21,8 @@ export interface TextProps extends Pick<RNTextProps, 'onLayout'>, TextStyleProps
   onPress?: () => void
 }
 
+const TextAncestorStyleContext = React.createContext<TextStyle[]>([])
+
 export function Text(props: TextProps) {
   const {
     style,
@@ -40,10 +42,14 @@ export function Text(props: TextProps) {
     textColor,
   } = props
 
+  const defaultStyle = useTextStyle({ fontSize: 'normal', textColor: COLOR.SECONDARY })
+  const textAncestorStyle = React.useContext(TextAncestorStyleContext)
   const textStyle = useTextStyle({ ...props, fontSize, textColor })
 
   const composedStyle = useMemo(
     () => [
+      defaultStyle,
+      textAncestorStyle,
       alignCenter ? s.tc : alignRight ? s.tr : s.tl,
       fill && s.w100,
       upperCase && { textTransform: 'uppercase' },
@@ -54,19 +60,35 @@ export function Text(props: TextProps) {
       textStyle,
       style,
     ],
-    [alignCenter, alignRight, fill, style, upperCase, bold, semiBold, thin, italic, textStyle],
-  )
+    [
+      defaultStyle,
+      textAncestorStyle,
+      alignCenter,
+      alignRight,
+      fill,
+      upperCase,
+      bold,
+      semiBold,
+      thin,
+      italic,
+      textStyle,
+      style,
+    ],
+  ) as TextStyle[]
+
   if (props.children == null) {
     return null
   }
   return (
-    <RNText
-      style={composedStyle as never}
-      onPress={onPress}
-      numberOfLines={numberOfLines}
-      onLayout={onLayout}
-    >
-      {children}
-    </RNText>
+    <TextAncestorStyleContext.Provider value={composedStyle}>
+      <RNText
+        style={composedStyle as never}
+        onPress={onPress}
+        numberOfLines={numberOfLines}
+        onLayout={onLayout}
+      >
+        {children}
+      </RNText>
+    </TextAncestorStyleContext.Provider>
   )
 }
