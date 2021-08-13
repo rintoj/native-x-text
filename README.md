@@ -46,6 +46,16 @@ function MyComponent() {
 }
 ```
 
+## Style Inheritance
+
+```tsx
+<Text semiBold fontSize={'x-small'} textColor={COLOR.ERROR}>
+  Hello, <Text bold>world!</Text>
+</Text>
+```
+
+The text "world!" will inherit all properties of the parent "Hello,"
+
 ## API
 
 | Property               | Default Value | Usage                                                                      |
