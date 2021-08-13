@@ -36,8 +36,8 @@ export function Text(props: TextProps) {
     onPress,
     numberOfLines,
     onLayout,
-    fontSize = 'normal',
-    textColor = COLOR.SECONDARY,
+    fontSize,
+    textColor,
   } = props
 
   const textStyle = useTextStyle({ ...props, fontSize, textColor })
@@ -52,6 +52,8 @@ export function Text(props: TextProps) {
       thin && s.fw2,
       italic && s.i,
       textStyle,
+      !fontSize && { fontSize: 'inherit' },
+      !textColor && { color: 'inherit' },
       style,
     ],
     [alignCenter, alignRight, fill, style, upperCase, bold, semiBold, thin, italic, textStyle],
